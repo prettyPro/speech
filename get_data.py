@@ -22,12 +22,12 @@ def extract_features(wav_files):
     labels_set = []
     labels_repeat = []
     labels_unique = []
-    # for wav_file in tqdm(wav_files):
-    #     # 读入音频文件
-    #     audio, fs = librosa.load(wav_file)
-    #     # 获取音频mfcc特征[n_steps,  n_inputs](分帧的数量，特征)
-    #     mfccs = np.transpose(librosa.feature.mfcc(y=audio,  sr=fs,  n_mfcc=40),  [1, 0])
-    #     inputs.append(mfccs.tolist())
+    for wav_file in tqdm(wav_files):
+        # 读入音频文件
+        audio, fs = librosa.load(wav_file)
+        # 获取音频mfcc特征[n_steps,  n_inputs](分帧的数量，特征)
+        mfccs = np.transpose(librosa.feature.mfcc(y=audio,  sr=fs,  n_mfcc=40),  [1, 0])
+        inputs.append(mfccs.tolist())
 
     #获取对应label
     for wav_file in wav_files:
@@ -43,8 +43,8 @@ def extract_features(wav_files):
     return inputs,  np.array(labels_set,  dtype=np.int)
 
 if __name__ == '__main__':
-    wav_files = get_wav_files("audio", "1,2,3,4,5")
+    wav_files = get_wav_files("half-audio", "1,2,3,4,5")
     train_features, train_labels = extract_features(wav_files)
 
-    np.save('train_features.npy', train_features)
-    np.save('train_labels.npy', train_labels)
+    np.save('half_features.npy', train_features)
+    np.save('half_labels.npy', train_labels)
